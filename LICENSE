@@ -1,0 +1,41 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 W6W
+
+The documentation and guidelines in this repository (the `*.md` files) are licensed under the
+Creative Commons Attribution 4.0 International License. You may share and adapt them, including
+commercially, provided you give appropriate credit and indicate if changes were made.
+
+Full text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+TWO CARVE-OUTS, BOTH DELIBERATE
+-------------------------------
+
+1. `scripts/` and `tokens/` are licensed under the MIT License instead, so the palette and the
+   generator can be copied into your own code without an attribution obligation:
+
+     Permission is hereby granted, free of charge, to any person obtaining a copy of this
+     software and associated documentation files (the "Software"), to deal in the Software
+     without restriction, including without limitation the rights to use, copy, modify, merge,
+     publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+     to whom the Software is furnished to do so, subject to the following conditions:
+
+     The above copyright notice and this permission notice shall be included in all copies or
+     substantial portions of the Software.
+
+     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+     INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+     PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+     FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+     OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+     DEALINGS IN THE SOFTWARE.
+
+2. The logo, wordmark, mark and avatar files in `logo/`, `avatar/`, `social/` and `dist/` are
+   trademarks, and trademarks are not licensed by a copyright licence. A copyright licence lets
+   you copy a file; it does not let you use someone's brand as your own. Use of those files is
+   governed by TRADEMARK.md, which permits the uses people actually need — referring to w6w,
+   linking to us, saying your product works with ours — and asks you not to use our identity as
+   yours.
+
+   In short: CC BY lets you reproduce these files. TRADEMARK.md is about what the mark may
+   signify when you do.
