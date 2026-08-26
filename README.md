@@ -23,13 +23,18 @@ scripts/  the generator that produces everything above
 | To know how to write the name | [BRAND.md](BRAND.md) §1 — it is `W6W` in prose, `w6w` in code |
 | To know what you're allowed to do with the mark | [TRADEMARK.md](TRADEMARK.md) |
 
-Everything is a plain SVG with no external font dependency — the letterforms are drawn as
-strokes, not set in a typeface — so they render identically everywhere.
+Everything is a plain SVG with no external font dependency — the wordmark letterforms are
+drawn as strokes, not set in a typeface — so they render identically everywhere. The icon
+itself (`logo/w6w-iconmark.svg`) is a hand-authored filled glyph, not part of that stroke
+system; it doesn't read as the numeral "6" up close, so it's used standalone (mark, avatar,
+favicon, banner tile) and the wordmark/lockup text keeps its own thin-stroke "6".
 
 ## Building
 
-Assets are generated, never hand-edited. Change the geometry or the palette in
-`scripts/build.mjs` and re-run, so the mark cannot drift between assets:
+Assets are generated, never hand-edited — except `logo/w6w-iconmark.svg` itself, which is the
+one hand-authored source. Change its path data to change the icon everywhere; change the
+wordmark geometry or the palette in `scripts/build.mjs`; then re-run, so nothing can drift
+between assets:
 
 ```bash
 node scripts/build.mjs              # regenerate every SVG
