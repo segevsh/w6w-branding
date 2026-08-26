@@ -32,7 +32,7 @@ export const C = {
 // in a real display sans and converted to outlines, so it carries no font
 // dependency and is never hand-drawn here. Read at build time (not copy-pasted)
 // so it can't drift from that source file; recolour it, don't redraw it.
-const LOGO_SRC = readFileSync(R("logo/logo.svg"), "utf8");
+const LOGO_SRC = readFileSync(R("logo/svg/logo.svg"), "utf8");
 const logoShapes = [...LOGO_SRC.matchAll(/<path d="([^"]+)"/g)].map((m) => m[1]);
 const [, , , WORD_PATH] = logoShapes; // shapes 0-2 = iconmark, 3 = "W6W" outline
 const logoCircle = LOGO_SRC.match(/<circle cx="([^"]+)" cy="([^"]+)" r="([^"]+)"/);
@@ -141,15 +141,15 @@ const banner = ({ w, h, safeW, safeH, bg, color, lockupW, tagline, taglineColor,
 };
 
 const files = {
-  "logo/w6w-wordmark.svg": wordmark(C.accent),
-  "logo/w6w-wordmark-mono.svg": wordmark("currentColor"),
-  "logo/w6w-wordmark-ondark.svg": wordmark(C.paper),
-  "logo/w6w-mark.svg": mark(C.accent, C.paper),
-  "logo/w6w-mark-ondark.svg": mark(C.paper, C.accent),
-  "logo/w6w-mark-mono.svg": svg("0 0 96 96", 96, 96, iconAt("currentColor", 48, 48, 96 * ICON_FILL_FRAC)),
-  "logo/w6w-lockup.svg": lockup(C.accent),
-  "logo/w6w-lockup-ondark.svg": lockup(C.paper),
-  "logo/w6w-lockup-mono.svg": lockup("currentColor"),
+  "logo/svg/w6w-wordmark.svg": wordmark(C.accent),
+  "logo/svg/w6w-wordmark-mono.svg": wordmark("currentColor"),
+  "logo/svg/w6w-wordmark-ondark.svg": wordmark(C.paper),
+  "logo/svg/w6w-mark.svg": mark(C.accent, C.paper),
+  "logo/svg/w6w-mark-ondark.svg": mark(C.paper, C.accent),
+  "logo/svg/w6w-mark-mono.svg": svg("0 0 96 96", 96, 96, iconAt("currentColor", 48, 48, 96 * ICON_FILL_FRAC)),
+  "logo/svg/w6w-lockup.svg": lockup(C.accent),
+  "logo/svg/w6w-lockup-ondark.svg": lockup(C.paper),
+  "logo/svg/w6w-lockup-mono.svg": lockup("currentColor"),
   "avatar/avatar.svg": mark(C.accent, C.paper),
   "avatar/favicon.svg": svg("0 0 96 96", 96, 96,
     [tile(C.accent, 20), iconAt(C.paper, 48, 48, 96 * FAVICON_FILL_FRAC)].join("\n")),
@@ -230,9 +230,9 @@ if (process.env.RENDER) {
   const browser = await pw.chromium.launch({ executablePath: process.env.CHROME });
   const page = await browser.newPage();
   const png = [
-    ["logo/w6w-lockup.svg", "dist/w6w-lockup.png", 1050, 288, "transparent"],
-    ["logo/w6w-lockup-ondark.svg", "dist/w6w-lockup-ondark.png", 1050, 288, C.night],
-    ["logo/w6w-wordmark.svg", "dist/w6w-wordmark.png", 811, 240, "transparent"],
+    ["logo/svg/w6w-lockup.svg", "logo/png/w6w-lockup.png", 1050, 288, "transparent"],
+    ["logo/svg/w6w-lockup-ondark.svg", "logo/png/w6w-lockup-ondark.png", 1050, 288, C.night],
+    ["logo/svg/w6w-wordmark.svg", "logo/png/w6w-wordmark.png", 811, 240, "transparent"],
     ["avatar/avatar.svg", "dist/avatar-1024.png", 1024, 1024, "transparent"],
     ["avatar/avatar.svg", "dist/avatar-512.png", 512, 512, "transparent"],
     ["avatar/avatar.svg", "dist/avatar-98.png", 98, 98, "transparent"],
@@ -243,9 +243,9 @@ if (process.env.RENDER) {
     ["social/linkedin-personal.svg", "dist/linkedin-personal.png", 1584, 396, C.night],
     ["social/og-image.svg", "dist/og-image.png", 1200, 630, C.night],
   ];
-  mkdirSync(R("dist"), { recursive: true });
   const { readFileSync } = await import("node:fs");
   for (const [src, out, w, h, bg] of png) {
+    mkdirSync(dirname(R(out)), { recursive: true });
     await page.setViewportSize({ width: w, height: h });
     await page.setContent(
       `<body style="margin:0;background:${bg};height:${h}px;display:flex;align-items:center;justify-content:center">` +

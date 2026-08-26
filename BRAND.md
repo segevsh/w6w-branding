@@ -27,9 +27,9 @@ Anything drawn later — an app icon, a sub-brand, a diagram — inherits it.
 
 | Asset | When |
 |---|---|
-| **Lockup** (`logo/w6w-lockup*.svg`) | The default. Anywhere there is horizontal room |
-| **Mark alone** (`logo/w6w-mark*.svg`) | Square contexts: avatars, app icons, favicons, a tab |
-| **Wordmark alone** (`logo/w6w-wordmark*.svg`) | When the mark already appears elsewhere on the surface |
+| **Lockup** (`logo/svg/w6w-lockup*.svg`) | The default. Anywhere there is horizontal room |
+| **Mark alone** (`logo/svg/w6w-mark*.svg`) | Square contexts: avatars, app icons, favicons, a tab |
+| **Wordmark alone** (`logo/svg/w6w-wordmark*.svg`) | When the mark already appears elsewhere on the surface |
 
 **Clearspace:** keep free space equal to the tile's corner radius (¼ of the mark's height) on all
 sides. **Minimum sizes:** mark 24px, lockup 96px wide. Below that use the mark, never the lockup.
