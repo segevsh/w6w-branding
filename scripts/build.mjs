@@ -150,6 +150,12 @@ const files = {
   "logo/svg/w6w-lockup.svg": lockup(C.accent),
   "logo/svg/w6w-lockup-ondark.svg": lockup(C.paper),
   "logo/svg/w6w-lockup-mono.svg": lockup("currentColor"),
+  // Paired with the hand-authored logo/svg/w6w-iconmark.svg (black, for print/
+  // one-colour use on light surfaces): the same geometry in paper, for the
+  // same use on dark ones. Not part of `files`' hand-edited exception — this
+  // one IS generated, from the shared ICON_PATHS/ICON_CIRCLE the mark already
+  // uses, so it can't drift from them.
+  "logo/svg/w6w-iconmark-ondark.svg": svg("0 0 1024 1024", 1024, 1024, `  <g fill="${C.paper}">${iconBody()}</g>`),
   "avatar/avatar.svg": mark(C.accent, C.paper),
   "avatar/favicon.svg": svg("0 0 96 96", 96, 96,
     [tile(C.accent, 20), iconAt(C.paper, 48, 48, 96 * FAVICON_FILL_FRAC)].join("\n")),
@@ -229,10 +235,26 @@ if (process.env.RENDER) {
   }
   const browser = await pw.chromium.launch({ executablePath: process.env.CHROME });
   const page = await browser.newPage();
+  // Square assets (iconmark, mark) get an icon-ladder of sizes; wide ones
+  // (wordmark, lockup) get a width ladder with height derived from the SVG's
+  // own aspect ratio (WORD_W/H, LOCKUP_W/H, measured above) — so a size can
+  // never go out of sync with the artwork the way a hand-picked height would.
+  // Transparent background throughout, `-ondark` variants included: a PNG
+  // baked onto one fixed dark colour only works on that exact shade, whereas
+  // a transparent one drops onto any surface, light or dark alike.
+  const ICON_SIZES = [16, 32, 64, 128, 256, 512, 1024];
+  const WIDE_WIDTHS = [320, 640, 1280, 2560];
+  const squareVariant = (name) =>
+    ICON_SIZES.map((size) => [`logo/svg/w6w-${name}.svg`, `logo/png/w6w-${name}-${size}.png`, size, size, "transparent"]);
+  const wideVariant = (name, aspectW, aspectH) =>
+    WIDE_WIDTHS.map((w) => [`logo/svg/w6w-${name}.svg`, `logo/png/w6w-${name}-${w}.png`, w, Math.round((w / aspectW) * aspectH), "transparent"]);
+
   const png = [
-    ["logo/svg/w6w-lockup.svg", "logo/png/w6w-lockup.png", 1050, 288, "transparent"],
-    ["logo/svg/w6w-lockup-ondark.svg", "logo/png/w6w-lockup-ondark.png", 1050, 288, C.night],
-    ["logo/svg/w6w-wordmark.svg", "logo/png/w6w-wordmark.png", 811, 240, "transparent"],
+    ...["iconmark", "iconmark-ondark", "mark", "mark-ondark"].flatMap(squareVariant),
+    ...wideVariant("wordmark", WORD_W, WORD_H),
+    ...wideVariant("wordmark-ondark", WORD_W, WORD_H),
+    ...wideVariant("lockup", LOCKUP_W, LOCKUP_H),
+    ...wideVariant("lockup-ondark", LOCKUP_W, LOCKUP_H),
     ["avatar/avatar.svg", "dist/avatar-1024.png", 1024, 1024, "transparent"],
     ["avatar/avatar.svg", "dist/avatar-512.png", 512, 512, "transparent"],
     ["avatar/avatar.svg", "dist/avatar-98.png", 98, 98, "transparent"],

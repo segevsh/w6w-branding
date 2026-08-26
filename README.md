@@ -18,7 +18,10 @@ scripts/  the generator that produces everything above
 
 | You want | Use |
 |---|---|
-| A logo next to our name in a post, README or deck | `logo/svg/w6w-lockup.svg` (or `-ondark`), or `logo/png/w6w-lockup.png` |
+| A logo next to our name in a post, README or deck | `logo/svg/w6w-lockup.svg` (or `-ondark`), or `logo/png/w6w-lockup-{320,640,1280,2560}.png` |
+| Just the icon, no wordmark — a square badge or tile | `logo/svg/w6w-mark.svg` (or `-ondark`), or `logo/png/w6w-mark-{16,32,64,128,256,512,1024}.png` |
+| The bare glyph in one flat colour — print, stamping, engraving | `logo/svg/w6w-iconmark.svg` (black; `-ondark` is the paper/white pair), or the matching `logo/png/w6w-iconmark*-<size>.png` |
+| Wordmark alone, no icon | `logo/svg/w6w-wordmark.svg` (or `-ondark`), or `logo/png/w6w-wordmark-{320,640,1280,2560}.png` |
 | A square icon / avatar | `avatar/avatar.svg`, or `dist/avatar-512.png` |
 | A favicon | `avatar/favicon.svg`, `dist/favicon-32.png` |
 | Our colours in your app | `tokens/tokens.css` or `tokens/tokens.json` |
@@ -31,6 +34,12 @@ itself (`logo/svg/w6w-iconmark.svg`) is a hand-authored filled glyph, not part o
 system; it doesn't read as the numeral "6" up close, so it's used standalone (mark, avatar,
 favicon, banner tile) and the wordmark/lockup text keeps its own thin-stroke "6".
 
+`logo/png/` mirrors every non-mono SVG in `logo/svg/` as a size ladder: `16`–`1024`px for the
+square assets (`iconmark`, `mark`) and `320`–`2560`px wide for the two-dimensional ones
+(`wordmark`, `lockup`, height following their own aspect ratio). All of them export on a
+transparent background, `-ondark` colourways included, so one file drops onto any surface
+instead of being tied to one exact shade of dark.
+
 ## Building
 
 Assets are generated, never hand-edited — except `logo/svg/w6w-iconmark.svg` itself, which is the
@@ -40,7 +49,7 @@ between assets:
 
 ```bash
 node scripts/build.mjs              # regenerate every SVG
-RENDER=1 node scripts/build.mjs     # also rasterise the PNGs (logo/png/, dist/)
+RENDER=1 node scripts/build.mjs     # also rasterise the PNG size ladders (logo/png/, dist/)
 ```
 
 Rasterising needs a Chromium — `npx playwright install chromium`, or point `CHROME` at a binary
