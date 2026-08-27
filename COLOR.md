@@ -37,16 +37,17 @@ information, and colouring it red teaches people to ignore red.
 **Radius:** `10px` for UI surfaces; the mark's tile uses `22/96` of its own height, which is the
 same curve at icon scale.
 
-## 2. The drift, and how to close it
+## 2. The drift — closed 2026-08-27
 
-These values are the ones in `@w6w/ui` (`packages/ui/src/styles/_tokens.scss`), which is the
-library partners consume. The marketing site
-(`packages/frontend/packages/web/src/styles/global.css`) declares its own set, and they are **not
-the same** — measured 2026-08-24:
+The marketing site (`packages/frontend/packages/web/src/styles/global.css`) declared its own
+palette and it was **not** the same as this one. It now is: `global.css` carries these values,
+cites this file as their source, and the divergence below is history rather than a to-do.
 
-| Role | `@w6w/ui` (canonical) | frontend | Verdict |
+What was actually changed, measured 2026-08-24 and applied 2026-08-27:
+
+| Role | Canonical | frontend was | |
 |---|---|---|---|
-| accent / primary — light | `#3355E6` | `#2F5FD6` | **Real divergence.** Two different brand blues shipping side by side |
+| accent / primary — light | `#3355E6` | `#2F5FD6` | **Real divergence.** Two brand blues shipping side by side |
 | accent / primary — dark | `#5B8CFF` | `#6B9DFF` | Same divergence, dark mode |
 | muted — light | `#5F6875` | `#5B6472` | Drift |
 | panel-2 — light | `#F0F2F6` | `#EEF1F5` | Drift |
@@ -54,11 +55,32 @@ the same** — measured 2026-08-24:
 | success — light | `#2E9E5B` | `#1E8A53` | Drift |
 | danger — light | `#C1362F` | `#C93838` | Drift |
 | warning — light | `#C77700` | `#A86A0A` | Drift |
-| bg, panel, ink, and every dark ground | identical | identical | Fine |
+| success — dark | `#3FBF77` | `#4BB37A` | Drift this table had **missed** |
+| warning — dark | `#F0A020` | `#F0A844` | Drift this table had **missed** |
+| bg, panel, ink, and the dark grounds | identical | identical | Fine |
 
-Nobody chose two brand blues; they were entered twice, months apart. The fix is to point
-`global.css` at these values — a small, mechanical change, and worth doing before the palette is
-published anywhere a third party copies it from.
+The 2026-08-24 pass compared the dark *grounds*, concluded "every dark ground identical", and wrote
+that up as though it covered the whole dark block. It did not — dark `success` and `warning` had
+drifted too, and they were only found when the change was actually applied. A table that says
+"identical" is only as good as the rows it looked at.
 
-**Which one is canonical, and why:** `@w6w/ui`'s. It is the set shipped to partners embedding our
-components, so it is the one that already appears inside other people's products.
+Nobody chose two brand blues; they were entered twice, months apart.
+
+**Which one is canonical, and why:** `@w6w/ui`'s, which is what `tokens/` generates. It is the set
+shipped to partners embedding our components, so it is the one that already appears inside other
+people's products.
+
+**The accent was not a contrast trade.** `global.css` justified its own blue as "darkened to hold
+4.5:1 against a light surface". The canonical value holds it better: `#3355E6` on `--bg` measures
+**5.52:1**, against `#2F5FD6`'s 5.30:1, and white on the accent goes 5.63 → 5.86. Light `success`
+and `warning` do move the other way — 4.10 → 3.21 and 4.18 → 3.26, AA-large rather than AA — but
+neither token is referenced anywhere in that site today, so nothing regressed. **Anyone who puts
+small text in `--success` or `--warning` on a light ground has to solve that first.**
+
+**Two things the palette was not enough to fix**, both `BRAND.md` §2 violations found in the same
+pass and corrected with it: the site's favicon was a rounded rect with the letters `w6w` typed in
+the UI font (in the *old* dark-mode blue), and its social card drew the wordmark the same way —
+"don't rebuild the wordmark by typing w6w in a font" is explicit, and both now rasterise the real
+files. The topbar had the same problem and now carries the lockup — the **mono** one, inlined so
+`currentColor` reaches it, near-black (`--text-strong`) on light and white on dark. A single-colour
+mark we own does not need the two-recoloured-files swap that per-app vendor icons do.
