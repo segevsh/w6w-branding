@@ -27,6 +27,7 @@ scripts/  the generator that produces everything above
 | Our colours in your app | `tokens/tokens.css` or `tokens/tokens.json` |
 | To know how to write the name | [BRAND.md](BRAND.md) §1 — it is `W6W` in prose, `w6w` in code |
 | To know what you're allowed to do with the mark | [TRADEMARK.md](TRADEMARK.md) |
+| The legal entity name for a footer/terms/privacy page | [LEGAL.md](LEGAL.md) — `w6w, Inc`, not a style choice |
 
 Everything is a plain SVG with no external font dependency — the wordmark letterforms are
 drawn as strokes, not set in a typeface — so they render identically everywhere. The icon
